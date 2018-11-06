@@ -42,14 +42,13 @@ public class BlumGoldwasser {
     System.out.println(choppedMessage.toString());
 
     long XsubI = XNaut;
-    for(int i = 1; i <= t; i++){
+    for(int i = 0; i < t; i++){
 
-      XsubI = ( (XsubI - 1) * (XsubI - 1) ) % N;
       String XsubIString = Integer.toString((int) XsubI, 2);
       String leastSigBits = XsubIString.substring(XsubIString.length()-h);
 
       int PsubIasInt = Integer.parseInt(leastSigBits, 2);
-      int MsubIasInt = Integer.parseInt(choppedMessage.get(i-1), 2);
+      int MsubIasInt = Integer.parseInt(choppedMessage.get(i), 2);
 
       int CsubIasInt = PsubIasInt ^ MsubIasInt;
       String CsubI = Integer.toString(CsubIasInt, 2);
@@ -57,8 +56,9 @@ public class BlumGoldwasser {
       while(CsubI.length() < 4){
         CsubI = "0" + CsubI;
       }
-
       answer.add(CsubI);
+
+      XsubI = ( (XsubI - 1) * (XsubI - 1) ) % N;
     }
     XsubI = ( (XsubI - 1) * (XsubI - 1) ) % N;
     return new Pair<>(answer, (int)XsubI);

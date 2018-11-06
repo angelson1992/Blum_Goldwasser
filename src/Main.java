@@ -12,6 +12,7 @@ public class Main {
         long newBigNumber = ((long)(159201 -1) * (long)(159201 -1)) % bigNumber;
 
         Pair<ArrayList<String>, Integer> cyphertext = cypher.encrypt(message);
+        System.out.println(cyphertext.toString());
         cypher.decrypt(cyphertext);
     }
 }
