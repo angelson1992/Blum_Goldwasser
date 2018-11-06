@@ -58,9 +58,9 @@ public class BlumGoldwasser {
       }
       answer.add(CsubI);
 
-      XsubI = ( (XsubI - 1) * (XsubI - 1) ) % N;
+      XsubI = ( XsubI * XsubI ) % N;
     }
-    XsubI = ( (XsubI - 1) * (XsubI - 1) ) % N;
+    XsubI = ( XsubI * XsubI ) % N;
     return new Pair<>(answer, (int)XsubI);
   }
 
@@ -79,8 +79,33 @@ public class BlumGoldwasser {
     long Vap = (long) valueV * (long) IntegerA * (long) PrimeP;
     long ubq = (long) valueU * (long) IntegerB * (long) PrimeQ;
     long Xnaut = (Vap + ubq) % N;
+    if(Xnaut < 0){Xnaut = N - Xnaut;}
+    long XsubI = Xnaut;
+
+    int k = (int) (Math.log(N)/Math.log(2));
+    int h = (int) (Math.log(k)/Math.log(2));
+
+    for(int i = 0; i < t; i++){
+
+      String XsubIString = Integer.toString((int) XsubI, 2);
+      String leastSigBits = XsubIString.substring(XsubIString.length()-h);
+
+      int PsubIasInt = Integer.parseInt(leastSigBits, 2);
+      int CsubIasInt = Integer.parseInt(cyphertext.getKey().get(i), 2);
+
+      int MsubIasInt = PsubIasInt ^ CsubIasInt;
+      String MsubI = Integer.toString(MsubIasInt, 2);
+
+      while(MsubI.length() < 4){
+        MsubI = "0" + MsubI;
+      }
+      answer = answer + MsubI;
+
+      XsubI = ( XsubI * XsubI ) % N;
+    }
 
     return answer;
+
   }
 
   public int powerWithModulus(int base, int exponent, int modulus){
