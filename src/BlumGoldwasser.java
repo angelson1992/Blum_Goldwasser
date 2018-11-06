@@ -39,7 +39,7 @@ public class BlumGoldwasser {
     if(message.length()%h !=0 ){
       choppedMessage.add(message.substring((message.length()/h) * h));
     }
-    System.out.println(choppedMessage.toString());
+    System.out.println("Encrypting message " + choppedMessage.toString());
 
     long XsubI = XNaut;
     for(int i = 0; i < t; i++){
